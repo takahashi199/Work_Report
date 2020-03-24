@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta name="viewport"  content="initial-scale=1.0" charset="UTF-8">
+<title>メンバー一覧</title>
+
+<link th:href="@{/css/common.css}" rel="stylesheet" >
+<link th:href="@{/css/memberlist.css}" rel="stylesheet" >
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+	<nav>
+		<h1 id="pstnTop">
+			<a th:href="@{/menu}" id="logo">作業状況報告</a>
+		</h1>
+		<div class="top_menu" id="pstnSecond">
+			<ul>
+				<li>
+					<form th:action="@{/logout}" method="post" name="logoutform">
+						<a href="javascript:logoutform.submit()" id="logout-btn">ログアウト</a>
+					</form>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</head>
+<body>
+
+<div id="listarea">
+
+<form th:action="@{/MemberList/RoleAdd}" method="post"  id="memberlist">
+	<div>権限未保持者</div>
+	<table border="1">
+		<tr><th>ログインID</th><th>権限付与</th><th>削除</th></tr>
+		<tr th:each="member : ${Members}">
+			<td th:text="${member.login_id}"></td>
+			<td><button class="btn" th:value="${member.login_id}" name="add">付与</button></td>
+			<td><button class="btn" th:value="${member.login_id}" name="del">削除</button></td>
+		</tr>
+	</table>
+</form>
+
+<form th:action="@{/MemberList/RoleDel}" method="post"  id="registerlist">
+	<div>権限保持者</div>
+	<table>
+		<tr><th>ログインID</th><th>権限破棄</th><th>削除</th></tr>
+		<tr th:each="register : ${Registers}">
+			<td th:text="${register.login_id}"></td>
+			<td><button class="btn" th:value="${register.login_id}" name="add">破棄</button></td>
+			<td><button class="btn" th:value="${register.login_id}" name="del">削除</button></td>
+		</tr>
+	</table>
+</form>
+
+</div>
+
+</body>
+</html>

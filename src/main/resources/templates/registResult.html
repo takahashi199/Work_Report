@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Regist Result</title>
+</head>
+<body>
+
+	<h1>登録内容</h1>
+
+	<div class="block">
+	登録者:<span th:text="${username}"></span>
+	</div>
+
+	<div class="block">
+	プロジェクト名:<span th:text="${project}"></span>
+	</div>
+	<div class="block">
+	顧客:<span th:text="${client}"></span>
+	</div>
+	<div class="block">
+	年月:<span th:text="${date}"></span>
+	</div>
+	<div class="block">
+	担当:<span th:text="${charge}"></span>
+	</div>
+	<div class="block">
+	作業場所:<span th:text="${place}"></span>
+	</div>
+	<div class="block">
+	最寄駅:<span th:text="${station}"></span>
+	</div>
+	<div class="block">
+	状況:<span th:text="${detail}"></span>
+	</div>
+
+	<a th:href="@{/menu}"  id="back">戻る</a>
+
+</body>
+</html>

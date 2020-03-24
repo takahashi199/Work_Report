@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"  content="initial-scale=1.0" charset="UTF-8">
+<!--
+<title>ログイン</title>
+<link th:href="@{/css/login.css}" rel="stylesheet" >
+-->
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<link th:href="@{/css/login.css}" rel="stylesheet" media="screen and (min-width: 431px)">
+<link th:href="@{/css/loginMin.css}" rel="stylesheet" media="screen and (max-width: 430px)">
+<link th:href="@{/css/login-tab.css}" rel="stylesheet" >
+
+<script th:inline="javascript">
+window.addEventListener("load", function() {
+	var errorMessage = [[${errorMessage}]];
+	if(!errorMessage == "") {
+		alert(errorMessage);
+	}
+}, false);
+
+//function toRegister() {
+	//location.href = "/member/register";
+//}
+
+//送信時チェック
+function checkValue() {
+	var sendMessage = "";
+	if (document.getElementById('login_id').value == "") {
+		sendMessage += "ログインIDを入力してください\n";
+	}
+
+	if(document.getElementById('password').value == "") {
+		sendMessage += "パスワードを入力してください";
+	}
+
+	if(sendMessage == "") {
+		return true;
+	}else {
+		alert(sendMessage);
+		return false;
+	}
+}
+
+function checkSinupValue(){
+	var sendMessage = "";
+	if (document.getElementById('Sinup_id').value == "") {
+		sendMessage += "ログインIDを入力してください\n";
+	}
+
+	if(document.getElementById('Sinup_password').value == "") {
+		sendMessage += "パスワードを入力してください";
+	}
+
+	if(sendMessage == "") {
+		return true;
+	}else {
+		alert(sendMessage);
+		return false;
+	}
+}
+
+</script>
+</head>
+<body>
+
+<div class="tabs">
+
+	<input id="login-tab" type="radio" name="tab_item" checked="checked">
+   		<label class="tab_item" for="login-tab">Login</label>
+	<input id="sinup-tab" type="radio" name="tab_item" >
+   		<label class="tab_item" for="sinup-tab">Sinup</label>
+
+	<form th:action="@{/authenticate}" class="tab-login tab_content" id="login" method="post" name="form" onSubmit="return checkValue()" autocomplete="off">
+		<h1>ログイン</h1>
+		<div class=formtitle>ログインID</div>
+		<input type="text" id="login_id" name="login_id" class="textbox" placeholder="Login ID"/>
+		<div class=formtitle>パスワード</div>
+	    <input type="password" id="password" name="password" class="textbox" placeholder="Password"/>
+		<button type="submit">Login</button>
+
+		<!--
+		<div class="link">
+			<a href="/member/register">登録</a>
+		</div>
+
+		 -->
+	</form>
+
+	<form th:action="@{/member/register/result}" class="tab-sinup tab_content" id="sinup" method="POST" name="form" onSubmit="return checkSinupValue()">
+
+
+		<h1>新規登録</h1>
+		<div class=formtitle>ログインID</div>
+		<input type="text" id="Sinup_id" name="login_id" class="textbox" placeholder="Login ID"/>
+		<div class=formtitle>パスワード</div>
+	    <input type="password" id="Sinup_password" name="password" class="textbox" placeholder="Password"/>
+
+	    <button type="submit" class="btnn paper paper-raise btnnn">Sinup</button>
+
+	    <!--
+	    <div class="link">
+	    	<a th:href="@{/login}" class="btnn paper paper-raise" id="back">戻る</a>
+	    </div>
+	     -->
+	</form>
+</div>
+</body>
+</html>

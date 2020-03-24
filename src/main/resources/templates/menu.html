@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<title>menu</title>
+</head>
+<body>
+
+<form th:action="@{/WorkRegist}" method="post" name="form"  sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_REGISTER')">
+	<button type="submit">作業状況登録</button>
+</form>
+
+<form th:action="@{/WorkEdit}" method="post" name="form" >
+	<input type="hidden" name="id" value="22">
+	<button type="submit">作業状況編集</button>
+</form>
+
+<form th:action="@{/SinupTest}" method="post" name="form">
+	<button type="submit">SinUpTest</button>
+</form>
+
+<form th:action="@{/MemberList}" method="post" name="form"  sec:authorize="hasRole('ROLE_ADMIN')">
+	<button type="submit" >メンバー一覧(ADMIN)</button>
+</form>
+
+<form th:action="@{/menu}" method="post" name="form"  sec:authorize="hasRole('ROLE_MEMBER')">
+	<button type="submit" >メンバー一覧(MEMBER)</button>
+</form>
+
+<form th:action="@{/logout}" name="logout" method="POST">
+	<button type="submit">ログアウト</button>
+</form>
+
+ <a href="logout.java" id="logout-btn">ログアウト</a>
+
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+
+
+html, body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	height: 100%;
+	width: 100%;
+	/*background-color: #ffffff;*/
+	font-family: 'Arial', sans-serif;
+	font-size: 62.5%;
+}
+
+form {
+	width: 500px;
+}
+
+.wrap {
+	color: #000000;
+	/*text-transform: uppercase;*/
+	text-align: center;
+	font-size: 50px;
+	/*position: relative;*/
+	/*width: 500px;*/
+	height: 100%;
+	/*margin: 0 auto;*/
+	display: block;
+	/*width: 100%;*/
+	/*border: solid;*/
+	/*border-color: deepskyblue;*/
+
+}
+
+label {
+	position: absolute;
+	font-size: 16px;
+	color: #a0a0a0;
+	transition: all 0.25s ease;
+	left: 12px;
+	top: 39px;
+}
+
+label.focus {
+	top: -7px;
+	left: 5px;
+	font-size: 14px;
+	color: #000000;
+}
+
+input[type="text"], input[type="password"], p {
+	/*position: relative;*/
+	/*display: block;*/
+	width: 100%;
+	padding: 15px;
+	border-radius: 5px;
+	font-size: 16px;
+	outline: none;
+	border: solid;
+	border-color: #a0a0a0;
+	color: #000;
+
+}
+
+.block {
+	display: block;
+	position: relative;
+	margin-top: 15px;
+}
+
+p {
+	background-color: #f0f0f0;
+}
+
+.item {
+	align-self: stretch;
+	padding: 2rem 0;
+	text-align: center;
+}
+
+.item h4 {
+	margin: 0 0 20px 0;
+	font-weight: normal;
+	font-size: 1.8rem;
+	color: #666;
+}
+
+.btnn {
+	position: relative;
+	display: block;
+	width: 235px;
+	margin: 20px auto;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	color: #000;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	transform-style: flat;
+	transition: all 250ms ease-out;
+	font-size: 15px;
+}
+
+/* Paper effect – slightly raised off background */
+.paper {
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
+	border-color: #dedede;
+}
+
+input{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background: whitesmoke;
+
+}
+
+.btnnn {
+	width: 350px;
+}

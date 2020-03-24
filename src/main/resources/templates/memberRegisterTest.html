@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>メンバー登録</title>
+    <link th:href="@{/css/register.css}" rel="stylesheet">
+
+
+</head>
+<body>
+<script th:inline="javascript">
+    window.addEventListener("load", function () {
+        var errorMessage = [[${errorMessage}]];
+        if (!errorMessage == "") {
+            alert(errorMessage);
+        }
+    }, false);
+
+    //送信時チェック
+    function checkValue() {
+        var sendMessage = "";
+
+        if (document.form.login_id.value == "") {
+            sendMessage += "ログインIDを入力してください\n";
+        } else if (document.form.password.value.length > 50) {
+            sendMessage += "ログインIDは50文字以内で入力してください\n";
+        }
+
+        if (document.form.password.value == "") {
+            sendMessage += "パスワードを入力してください\n";
+        } else if (document.form.password.value.length > 50) {
+            sendMessage += "パスワードは50文字以内で入力してください\n";
+        }
+
+
+        if (sendMessage == "") {
+            return true;
+        } else {
+            alert(sendMessage);
+            return false;
+        }
+    }
+</script>
+<script th:src="@{/js/register.js}"></script>
+
+<form th:action="@{/member/register/test}" method="POST" name="form" onSubmit="return checkValue()">
+
+    <div class="wrap">
+
+        <div class="block">
+        	<div>login_id</div>
+            <input type="text" id="login_id" name="login_id" class="id"/>
+        </div>
+
+        <div class="block">
+        	<div>password</div>
+            <input type="password" id="password" name="password" />
+        </div>
+
+    </div>
+    <div style="margin-top: 40px"></div>
+    <button type="submit" class="btnn paper paper-raise btnnn">Registration</button>
+    <a th:href="@{/login}" class="btnn paper paper-raise" id="back">Cancel</a>
+</form>
+</body>
+</html>

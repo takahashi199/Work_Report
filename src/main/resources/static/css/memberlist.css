@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+table{
+	margin:10px;
+	display:inline-block;
+}
+form{
+	margin-bottom:10px;
+	text-align:center;
+}
+#listarea{
+	padding:20px;
+}
+
+table, td, th {
+	border: 2px #808080 solid;
+}

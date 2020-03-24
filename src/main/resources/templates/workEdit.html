@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport"  content="initial-scale=1.0" charset="UTF-8">
+<title>更新</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link th:href="@{/css/workRegiMini.css}" rel="stylesheet" media="screen and (max-width: 429px)">
+<link th:href="@{/css/workRegi.css}" rel="stylesheet" media="screen and (min-width: 430px)">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+/*
+ * メンバー記入枠を追加
+ */
+
+ mem_cnt = 1;
+
+$(document).on("click", ".add", function() {
+
+	mem_cnt = mem_cnt + 1;
+	var group = document.getElementById('charge');
+
+	// 子要素に含まれるdiv要素の数を取得
+	var count = group.getElementsByTagName('input').length;
+
+	// 最初のdiv要素を基準に親ノードを取得
+	var parent_node = group.getElementsByTagName('div')[0].parentNode;
+
+	// 新しいtr要素を生成
+	var input_node = document.createElement('div');
+
+	// 生成したtr要素に属性値を追加
+	input_node.setAttribute('id', 'in' + mem_cnt);
+//	input_node.setAttribute('type','text');
+//	input_node.setAttribute('name','charge' + (count + 1));
+//	input_node.setAttribute('class','members textbox');
+
+	// 生成したtr要素をノードに追加
+	parent_node.appendChild(input_node);
+
+
+
+	console.log("cnt:" + mem_cnt)
+
+	// 入力枠を追加する
+	document.getElementById('in' + mem_cnt).innerHTML = '<input type="text"  id="mem' + (mem_cnt) + '"  name="charge' + (mem_cnt) +'"  class ="members textbox" placeholder="担当者"><button class="del btn" id="del'+ (mem_cnt) +'" >削除</button>';
+
+});
+/*
+ *  メンバー記入枠を削除
+ */
+
+$(document).on("click", ".del", function() {
+	var target = $(this).parent();
+	target.remove();
+});
+
+/*
+ * メンバーを一つの文字列に合成
+ */
+
+$(document).on("click", ".send", function() {
+	let group = document.getElementById('charge');
+
+	// 子要素に含まれるinput要素の数を取得
+//	let max = group.getElementsByTagName('input').length;
+
+	var input_mem = $(".members").map(function(index, el){
+		return $(this).val();
+	})
+
+	let member="";
+
+
+	for(var i = 0; i < input_mem.length; i++){
+		if(input_mem[i].length != 0){
+			if(i != 0){
+				member = member + ","
+			}
+			member = member + input_mem[i];
+		}
+	}
+
+	/*
+	for(let i = 0; i < max; i++){
+		let mem_name = document.getElementById('mem' + (i+1)).value;
+		if(mem_name.length != 0){
+			if(i != 0){
+				member = member + ","
+			}
+			member = member + mem_name;
+		}
+	}
+	*/
+
+	document.getElementById('sendmember').value = member
+	console.log(member)
+	console.log(document.getElementById('sendmember').value)
+
+});
+
+//送信時チェック
+function checkValue() {
+	var sendMessage = "";
+
+	console.log("テキストチェック");
+
+	var submit_flag = "true"
+
+	if(document.form.place.value == "") {
+		var ele = document.getElementById('place_arr');
+		ele.style.display = 'block';
+		submit_flag = "false";
+	}else{
+		var ele = document.getElementById('place_arr');
+		ele.style.display = 'none';
+	}
+
+	if(document.form.station.value == "") {
+		var ele = document.getElementById('station_arr');
+		ele.style.display = 'block';
+		submit_flag = "false";
+	}else{
+		var ele = document.getElementById('station_arr');
+		ele.style.display = 'none';
+	}
+
+	if(document.form.sendmember.value == "") {
+		var ele = document.getElementById('sendmember_arr');
+		ele.style.display = 'block';
+		submit_flag = "false";
+	}else{
+		var ele = document.getElementById('sendmember_arr');
+		ele.style.display = 'none';
+	}
+
+	if(submit_flag == "true") {
+		return true;
+	}else {
+		return false;
+	}
+}
+
+
+</script>
+
+	<nav>
+		<h1 id="pstnTop">
+			<a th:href="@{/menu}" id="logo">作業状況報告</a>
+		</h1>
+		<div class="top_menu" id="pstnSecond">
+			<ul>
+				<li>
+					<form th:action="@{/logout}" method="post" name="logoutform">
+						<a href="javascript:logoutform.submit()" id="logout-btn">ログアウト</a>
+					</form>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</head>
+<body>
+
+
+
+<form th:action="@{/WorkEdit/Updata}" method="post" name="form" onSubmit="return checkValue()" autocomplete="off">
+
+	<input type="hidden" id="regi_id" name ="regi_id" th:value="${id}"/>
+
+	<div id="title">プロジェクト状況更新</div>
+
+	<div id="input_area">
+
+
+	<div class="timeselect ">
+		<div class ="formtitle">報告年月</div>
+		<select class="time year" id="Date" name ="date">
+		<!-- scriptで自動化 2年分 -->
+		</select>
+	</div>
+
+
+	<div class="projectform" >
+
+
+		<div class ="formtitle">プロジェクト名</div>
+		<span th:text="${project_id}"></span>
+		<input type="hidden" id="project" name="project"  th:value="${project_id}"/>
+
+	</div>
+
+
+
+	        <div class="clientform">
+	        	<div class ="formtitle">顧客名</div>
+	        	<span th:text="${client}"></span>
+	            <input type="hidden" id="client"  class="client textbox" name="client"  th:value="${client}"/>
+
+	        </div>
+
+	        <div class="placeform memberform">
+	        	<div class ="gridtitle">作業場所</div>
+
+	            <div class="gridform">
+	            	<div id="place_arr" class="errormessage">作業場所を記入してください</div>
+	            	<input type="text" id="place"  class="place textbox" name="place"  placeholder="作業場所" th:value="${place}"/>
+
+				</div>
+
+	        </div>
+
+  	        <div class="stationform memberform">
+	        	<div class ="gridtitle">最寄駅</div>
+				<div class="gridform">
+					<div id="station_arr" class="errormessage">最寄駅を記入してください</div>
+	            	<input type="text" id="station"  class="station textbox" name="station"  placeholder="最寄駅" th:value="${station}"/>
+				</div>
+	        </div>
+
+
+	        <div class="memberform">
+	        	<div class ="gridtitle">担当者
+	        	<input type="button" value="＋" id ="addbtn" class="add addbtn btn">
+	        	</div>
+	        	<div id = "charge" class ="chargeform">
+	        		<div id = "in1">
+	        		<div id="sendmember_arr" class="errormessage">担当者を記入してください</div>
+	            	<input type="text"  id="mem1"  name="charge1"  class ="members textbox" placeholder="担当者"/>
+	            	</div>
+	            </div>
+	        </div>
+
+	        <input type="hidden" id="sendmember" name ="charge"/>
+
+
+
+
+       <div class="detailblock" >
+       	<div class ="gridtitle">プロジェクト状況</div>
+           <textarea class="detail" id="detail" name="detail" ></textarea>
+       </div>
+	</div>
+
+	<div class = btn_area>
+	    <div class="center" >
+	    	<button type="submit" id ="button" class="send btn" name="regist">更新</button>
+	    </div>
+
+	    <div class="center">
+	    	<!-- <a th:href="@{/menu}"  class="back" id="back">戻る</a> -->
+	    	<button type="button" id ="back" class="back btn" name = back onclick="history.back()" >戻る</button>
+		</div>
+	</div>
+
+
+</form>
+
+
+</body>
+
+<script th:inline="javascript">
+/*
+* 年月のoptionを作成
+*/
+let now  = new Date();
+//let Year = now.getFullYear();
+//let Month = now.getMonth() + 1;
+
+let select = document.getElementById('Date');
+
+for(var i = 0; i < 2; i++){
+	 let option = document.createElement('option');
+	 now.setMonth(now.getMonth() - i )
+	 option.text = now.getFullYear() + "年" + (now.getMonth() + 1) + "月";
+	 option.value =now.getFullYear() + "年" + (now.getMonth() + 1) + "月";
+
+	 console.log(option.text);
+	 console.log(option.value);
+
+	 select.appendChild(option);
+ }
+
+//
+//	let time_data = /*[[${time}]]*/ ;
+//	console.log("初期値：" + time_data);
+//	if(time_data){
+//		let time_sel = document.getElementById('Date').options;
+//		for(var i = 0; i < time_sel.length; i++){
+//			if(time_sel[i].text === time_data){
+//				time_sel[i].selected = true;
+//				break;
+//			}
+//		}
+//	}
+
+	/*
+	*memberの初期値を表示
+	*/
+	let mem_data = /*[[${member}]]*/ 'sample';
+	console.log(mem_data);
+	if(mem_data){
+
+		let mem_leng = mem_data.length
+
+		document.getElementById('mem1').value = mem_data[0]
+		if(mem_leng > 1){
+			for(var i = 1; i<mem_leng; i++){
+				// memberの記入枠追加
+				document.getElementById('addbtn').click();
+				document.getElementById('mem' + (i + 1)).value = mem_data[i]
+			}
+
+		}
+	}
+
+	/*
+	*testareaの初期値を表示
+	*/
+	let text_data = /*[[${detail}]]*/ 'sample';
+	document.getElementById('detail').value = text_data
+
+
+</script>
+</html>

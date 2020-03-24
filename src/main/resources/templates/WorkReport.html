@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+	if ($(window).width() < 420) {
+
+		var $Contents = $("#project-list .describe");
+
+		$Contents.hide();
+		$("#project-list .project").on("click", function() {
+			$(this).next().slideToggle();
+			$(this).toggleClass("active");
+		});
+	}
+});
+/* $(function() {
+	$('.select').off('change');
+	$('.select').off('change');
+	$('.select').on('change',function(){
+		var data = {
+			date : $(this).val()
+		};
+
+	     $.ajax({
+	    	url: "./info",  //POST送信を行うファイル名を指定
+	        type: "GET",
+	        data: data,  //GET送信するデータを指定
+	        dataType: 'html',
+	        success: function(data) {
+	      	   datalist = $(data);
+	      	 $('select').off('change');
+
+	      	   console.log($.type(datalist));
+  	      	   html = html(datalist).children().find(".project");
+	      	   console.log($.type(html));
+	      	   html.find("#project-list");
+	      	   console.log(html);
+	      	   console.log("success");
+	      	   datalist.appendTo(".pc-tbl");
+
+    	   var projectlist = $("#project-list");
+	      	   projectlist.children().remove();
+	      	   projectlist.append(data);
+	      	},
+	     	error: function(data) {
+	  	   		alert('error' );
+	     	}
+	 	});
+
+	});
+}); */
+ $(function() {
+
+    $('input.delete_ids').prop('disabled', false);
+
+});
+ $(function() {
+	    // 1. 「全選択」する
+	    $('#all').on('click', function() {
+	      $("input.delete_ids").prop('checked', this.checked);
+	    });
+
+});
+$(function() {
+	 $('.project1').hover(function() {
+	 $(this).css('color', '');
+	 $(this).css('background', '#e3e5f2');
+	 $(this).css('cursor','pointer');
+	 }, function() {
+	 $(this).css('color', '');
+	 $(this).css('background', '');
+	 $(this).css('cursor','');
+	 });
+});
+/* $(function() {
+	   var count = 20;
+	 $('.detail').each(function() {
+	     var thisText = $(this).text();
+	      var textLength = thisText.length;
+	       if (textLength > count) {
+	            var showText = thisText.substring(0, count);
+	            var hideText = thisText.substring(count, textLength);
+	           var insertText = showText;
+	          insertText += '<span class="hide">' + hideText + '</span>';
+	          insertText += '<span class="omit">…</span>';
+	          insertText += '<a href="" class="close">隠す</a>';
+	          insertText += '<a href="" class="more">もっと見る</a>';
+	          $(this).html(insertText);
+	          $('.close').hide();
+	       };
+	  });
+	 $('.detail .more').click(function() {
+
+	      	$(this).hide()
+	      	.prevAll('.omit').hide()
+	      	.prevAll('.hide').fadeIn()
+	      	.nextAll('.close').fadeIn()
+	      return false;
+	   });
+
+	 $('.detail .close').click(function() {
+	      $(this).hide()
+          .prevAll('.omit').fadeIn()
+          .prevAll('.hide').hide()
+          .nextAll('.more').show()
+      	return false;
+	   });
+
+	 var winWidth = $(window).width();
+	   var checkFlag;
+	  if(winWidth <= 420) {
+	        checkFlag = 'hide';
+	   } else {
+	        checkFlag = 'show';
+	   }
+	   function winWidthCheck() {
+	      winWidth = $(window).width();
+	       if((winWidth <= 420) && (checkFlag == 'hide')) {
+	           $('.detail .hide').hide();
+	         $('.detail .more, .detail .omit').fadeIn();
+	         checkFlag = 'show';
+	       } else if((winWidth > 420) && (checkFlag == 'show')) {
+	         $('.detail .hide').fadeIn();
+	           $('.detail .more, .detail .omit').hide();
+	           checkFlag = 'hide';
+	       }
+	   }
+	   winWidthCheck();
+	    $(window).resize(function() {
+	       winWidthCheck();
+	    });
+	}); */
+</script>
+<title>作業状況</title>
+</head>
+<body>
+<style type="text/css">
+a {
+  color: black;
+  text-decoration: none;
+}
+  th {
+    background-color: #61c5bb; color: #fff;
+  }
+
+  .tbl-r05 td#status {
+	white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: left;
+
+  }
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+  table {
+    border-top: 1px solid #4f4d47;
+    border-right: 1px solid #ccc;
+    width: 640px;
+    border-spacing: 0;
+    margin: 0 auto;
+  }
+  th, td{
+    border-bottom: 1px solid #4f4d47;
+    border-left: 1px solid #4f4d47;
+    text-align: center;
+    padding: 5px;
+    white-space: nowrap;
+
+  }
+  #pstnTop {
+    background: #f9f9fe no-repeat center 100%;
+    padding-top: 5px;
+    border-bottom: 5px solid #45A949;
+    -webkit-background-size: 15px 15px;
+}
+#logout-btn {
+    padding: 0 10px;
+    position: absolute;
+    right: 0px;
+    top: 5px;
+}
+@media screen and (min-width: 421px) {
+
+  #project-list {
+    display:none;
+}
+  .pc-tbl {
+/*    table-layout:fixed;*/
+    width: 94.79%;
+    margin-bottom: 100px;
+  }
+
+  th {
+    background-color: #7c7c7c; color: #fff;
+  }
+  .pc-tbl td {
+    text-align: left;
+    font-size: 13px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+  }
+  .pc-tbl tr:nth-of-type(odd) {
+  background:#f5f5f5;
+  }
+  .pc-tbl tr:nth-of-type(even){
+  }
+
+  .pc-tbl td#status {
+	white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: left;
+    width:200px;
+
+  }
+
+  .project-create {
+    opacity: 0.6;
+    content: attr(data-label);
+    font-size: 11px;
+  }
+    input.delete_ids{
+  text-align: center;
+}
+  input.delete_ids:disabled{
+  background-color: #ccc;
+  color:#999;
+  cursor: default;
+}
+.edit-pen{
+  background: url(/images/img/icon_edit.png) no-repeat right 100%;
+  background-size: 12px;
+}
+
+}
+
+
+@media screen and (max-width: 420px) {
+  .pc-tbl {
+    display:none;
+}
+
+dl {
+    display: block;
+    margin-block-start: 0em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+  .tbl-r05 {
+    width: 100%;
+    border:none;
+    padding: 10px;
+  }
+  .tbl-r05 .thead {
+    display: none;
+  }
+  .tbl-r05 tr {
+    border-top: 1px solid #4f4d47;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .tbl-r05 td {
+    border-right: 1px solid #4f4d47;
+    border-bottom: none;
+    display: block;
+    padding: 0;
+  }
+
+
+   .tbl-r05 td:nth-of-type(n+1) {
+    display:block;
+    border-right: 1px solid #4f4d47;
+    border-bottom: 1px solid #4f4d47;
+    background: white;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 14pt;
+    text-align: left;
+  }
+
+  .tbl-r05 td:last-child {
+    border-bottom: 1px solid #4f4d47;
+  }
+
+  .tbl-r05 td:before {
+    display:block;
+    opacity: 0.8;
+    content: attr(data-label);
+    /*font-weight: bold;*/
+    background-color: #f5f3ec;
+    color: #4f4d47;
+    text-align: left;
+    font-size:14px;
+  }
+  .project-create {
+    opacity: 0.6;
+    content: attr(data-label);
+    font-size: 14px;
+  }
+#project-list {
+    width: 100%;
+    overflow: hidden;
+}
+#project-list dt {
+    padding: 5px;
+    min-height: 68px;
+}
+#project-list > dd {
+    width: 100%;
+    padding: 10px 0 0 0;
+    text-align: center;
+    display: block;
+    margin-left: 0;
+    box-sizing: border-box;
+}
+.test:nth-of-type(odd) {
+background:#fbfaec;
+}
+.test:nth-of-type(even){
+background:#f6fcee;
+}
+/*
+dt.project:nth-of-type(odd) {
+background:#fbfaec;
+}
+dt.project:nth-of-type(even){
+background:#f6fcee;
+}
+dd.describe:nth-of-type(odd) {
+background:#fbfaec;
+}
+dd.describe:nth-of-type(even) {
+background:#f6fcee;
+}
+ */
+.test > dt.active .iconToggle {
+    background: url(/images/img/icon_-.png) no-repeat right 50%;
+    background-size: 12px;
+}
+.test > dt .iconToggle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    float: right;
+    margin: 25px 10px 0 0;
+    background: url(/images/img/icon_+.png) no-repeat right 50%;
+    background-size: 12px;
+}
+/*
+#project-list > dt.active .iconToggle {
+    background: url(/images/img/icon_-.png) no-repeat right 50%;
+    background-size: 12px;
+}
+#project-list > dt .iconToggle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    float: right;
+    margin: 25px 10px 0 0;
+    background: url(/images/img/icon_+.png) no-repeat right 50%;
+    background-size: 12px;
+}
+ */
+div.btnArea {
+    width: 100%;
+    background-color: #fff;
+    padding: 10px 0;
+}
+.btnArea p.btn-edit {
+    background-color: #ed9027;
+    margin: 0 auto;
+    border-bottom: 5px solid #d27813;
+    color:white;
+}
+.btnArea p.btn-delete {
+    background-color: #ed9027;
+    margin: 0 auto;
+    margin-top: 10px;
+    border-bottom: 5px solid #d27813;
+    color:white;
+}
+div.btnArea p {
+    width: 48%;
+    text-align: center;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.btnArea p a {
+    display: block;
+    color: #FFF;
+    font-size: 110%;
+}
+}
+</style>
+<header id="header">
+	<nav>
+		<h1 id="pstnTop">
+			<a href="/genzaiNoProject.java" id="logo">作業状況報告</a>
+		</h1>
+		<div class="top_menu" id="pstnSecond">
+			<ul>
+				<li>
+					<a href="/logout.java" id="logout-btn">ログアウト</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="searchDate">
+	<!--  	<form method="POST" action="./ListServlet">
+			<input type="hidden" name="case" value="searchWord">
+			<input type="text" name="searchWord">
+			<input type="submit" value="検索">
+		</form>-->
+	<form method="GET" action="./info">
+		<input type="hidden" value="date">
+		<select name="date" class="select">
+				<div th:each="date : ${dates}">
+				<div th:unless="${date.isBlank()}" >
+				<option th:value="${date}" name="${date}" th:selected="${date}== ${selectedDate}" th:text="${date.substring(0,4)}+年+${date.substring(4,6)}+月"></option>
+				</div>
+				</div>
+			</select>
+			<input type="submit" value="日付検索">
+		</form>
+	</div>
+</header>
+<div>
+	<button onClick="window.location.href = './RegistServlet'">新規登録</button>
+</div>
+<div class="container">
+	<div style="background-color:#f9f9fa;padding:10px;text-align:center;">
+	<b>プロジェクト一覧</b>
+</div>
+<table class="pc-tbl" >
+<!-- <p th:text=${obj.getCreate_member_id().equals(a)} class=edit-pen></p> -->
+	<tr class="thead">
+		<th><label><input type="checkbox" id="all"></label></th>
+		<th>プロジェクト名</th>
+		<th>顧客名</th>
+		<th>作業場所</th>
+		<th>最寄駅</th>
+		<th>担当</th>
+		<th>状況</th>
+	</tr>
+<div th:each="obj : ${projectDatalist}">
+<div th:unless="${obj.getProject().isBlank()}" >
+
+	<tr class="project1">
+		<td><input type=checkbox class=delete_ids disabled></td>
+		<td class="project" th:utext="${obj.getProject()}">
+		<p class=project-create  th:text="作成者：+ ${obj.getMember()}">
+		<td data-label="顧客名" th:text="${obj.getCustomer()}" ></td>
+		<td data-label="作業場所"  th:text="${obj.getPlace()}" ></td>
+		<td data-label="最寄駅" th:text="${obj.getStation()}" ></td>
+		<td data-label="担当" th:text="${obj.getMember()}" ></td>
+		<td id="status" data-label="状況" th:text="${obj.getStatus()}" ></td>
+	</tr>
+</table>
+</div>
+</div>
+
+<dl id="project-list" >
+<div class="test" th:each="obj : ${projectDatalist}" th:unless="${obj.getProject().isBlank()}" >
+	<dt class="project"  >
+		<span class="iconToggle"></span>
+		<p class=project-name th:text="${obj.getProject()}"></p>
+		<p class=project-create>作成者：山本英彦</p>
+	</dt>
+	<dd class="describe">
+		<table class="tbl-r05" >
+			<tr class="thead">
+				<th>顧客名</th>
+				<th>作業場所</th>
+				<th>最寄駅</th>
+				<th>担当</th>
+				<th>状況</th>
+			</tr>
+			<tr>
+				<td data-label="顧客名" th:text="${obj.getCustomer()}" ></td>
+				<td data-label="作業場所"  th:text="${obj.getPlace()}" ></td>
+				<td data-label="最寄駅" th:text="${obj.getStation()}" ></td>
+				<td data-label="担当" th:text="${obj.getMember()}" ></td>
+				<td id="status" data-label="状況" th:text="${obj.getStatus()}" ></td>
+			</tr>
+		</table>
+		<div class="btnArea">
+			<p class="btn-edit">
+			<a href="/edit">編集</a></p>
+			<p class="btn-delete">
+			<a href="/edit">削除</a></p>
+		</div>
+	</dd>
+</div>
+</dl>
+</body>
+</html>
+
+<!-- 		<div th:if="${workReport.getResponsible_person_id() == Login_id}" class="comment-button">
+			<a th:href="@{'../../workReport/edit?project_id=' + ${workReport.getProject_id()}}" ><i class="fa fa-pencil"></i>編集</a>
+		</div> -->

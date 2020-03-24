@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Success</title>
+</head>
+<body>
+
+<h1>ログイン成功</h1>
+
+
+
+ログインユーザー名：<span th:text="${username}"></span>
+
+<a href="logout">ログアウト</a>
+
+<form id="logout" th:action="@{/logout}" method="post">
+    <button type="submit">ログアウト</button>
+    <input type="hidden"
+    th:name="${_csrf.parameterName}"
+    th:value="${_csrf.token}"/>
+</form>
+
+  <h1>waaaaaa</h1>
+</body>
+</html>
